@@ -64,6 +64,7 @@ exports.loginStrategy = new LocalStrategy({
                 if(!user.validPassword(password)){
                     return done(null, {type:false, msg: "Password is wrong.",data:{}});
                 }
+                var cert = fs.readFileSync('key.pem');
                 var token = jwt.sign({email: user.local.email, role : user.role, name : user.local.name}, cert, { algorithm: 'HS512'});  
                 user.token = token;
                 return done(null,{ type: true, msg:'',data:{ token: user.token}});
