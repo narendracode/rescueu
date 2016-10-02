@@ -49,7 +49,7 @@ describe('Express rest API test', function() {
                 .end(function(e,res){
                     expect(e).to.eql(null);
                     expect(res.body.type).to.eql(true);
-                    token = res.body.token;
+                    token = res.body.data.token;
                     user = parseToken(token);
                     expect(user.email).to.eql('test@test.com');
                     expect(user.role).to.eql('user');
@@ -68,7 +68,7 @@ describe('Express rest API test', function() {
                 .end(function(e,res){
                 expect(e).to.eql(null);
                 expect(res.body.type).to.eql(true);
-                token = res.body.token;
+                token = res.body.data.token;
                 user = parseToken(token);
                 expect(user.email).to.eql('test@test.com');
                 expect(user.role).to.eql('user');
@@ -87,7 +87,7 @@ describe('Express rest API test', function() {
                 .end(function(e,res){
                 expect(e).to.eql(null);
                 expect(res.body.type).to.eql(true);
-                expect(res.body.data).to.eql('user deleted successfully with email test@test.com');
+                expect(res.body.msg).to.eql('user deleted successfully with email ');
                 done();
             })
         });
