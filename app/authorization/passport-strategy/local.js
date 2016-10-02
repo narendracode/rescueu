@@ -39,10 +39,9 @@ exports.signupStrategy = new LocalStrategy({
                         user.token = token;
                         user.save(function(err,user1){
                         if(err){
-                        return done(null, { type : false,data: 'Error occured '+ err});
+                        return done(null, {type:false,msg: 'error occured '+ err,data:{}});
                         }
-                            
-                            return done(null, {type : true, token : user1.token});
+                            return done(null,{ type: true, msg:'',data:{ token: user1.token}});
                         }); 
                     });   
                }
@@ -61,15 +60,15 @@ exports.loginStrategy = new LocalStrategy({
             var mUser = new User();
             User.findOne({'local.email': email}, function(err, user) {
                 if (err){
-                    return done(null,{type:false,data: 'error occured '+ err});
+                   return done(null, {type:false,msg: 'error occured '+ err,data:{}});
                 }
                 if (!user) {
-                     return done(null, {type: false, 'data': "Account doesn't exists with the email provided."});
+                     return done(null, {type:false, msg: "Account doesn't exists with the email provided.",data:{}});
                 } 
                 if(!user.validPassword(password)){
-                    return done(null, {type: false, 'data': 'Password is wrong.'}); 
-        }
-                return done(null, {type : true, token : user.token});
+                    eturn done(null, {type:false, msg: "Password is wrong.",data:{}});
+                }
+                return done(null,{ type: true, msg:'',data:{ token: user.token}});
             });    
         });
     }                                      

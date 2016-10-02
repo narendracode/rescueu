@@ -47,10 +47,10 @@ require('./app/authorization/passport')(passport); //settting up passport config
 var cert = fs.readFileSync('key.pem');
 
 app.use(jwt({ secret: cert}).unless({path: ['/auth/signup',
-                                            '/auth/login',
-                                            '/auth/userinfo',
-                                            '/auth/logout'
-                                            '/'
+                                            ,'/auth/login'
+                                            ,'/auth/userinfo'
+                                            ,'/auth/logout'
+                                            ,'/'
                                            ]})); // API end point in path are public 
 
 app.use(function(err, req, res, next){
