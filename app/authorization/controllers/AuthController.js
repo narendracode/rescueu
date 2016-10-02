@@ -3,7 +3,6 @@ var User  = require('../models/UserModel.js');
 
 
 exports.deleteUser = function(req,res,next){
-    console.log(" in delete user  email : "+req.body.email);
     User.remove({"local.email" : req.body.email},function(err){
         if(err)
             res.json({type:false,msg: 'error occured '+ err,data:{}});
