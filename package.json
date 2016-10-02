@@ -3,7 +3,9 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "node ./bin/www"
+      "start": "forever start ./bin/www",
+      "stop": "forever stop ./bin/www",
+      "test":"./node_modules/mocha/bin/mocha ./tests/*"
   },
   "dependencies": {
     "bcrypt-nodejs": "0.0.3",
