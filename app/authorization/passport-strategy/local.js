@@ -16,9 +16,9 @@ exports.signupStrategy = new LocalStrategy({
       User.findOne({ 'local.email' :  email }, function(err, user) {
                 if (err){
                   return done(err);
-            }
+                }
                 if (user) {
-                    return done(null, {type : false,data: 'Email is already taken.'});
+                    return done(null, {type:false, msg: "Email is already taken",data:{}});
                 } else {
                     var newUser  = new User();
                     newUser.role =  'user';
@@ -27,20 +27,16 @@ exports.signupStrategy = new LocalStrategy({
                     newUser.local.password = newUser.generateHash(password);
                     newUser.save(function(err,user) {
                         if (err){
-                            return done(null,{
-                                type:false,
-                                data: 'error occured '+ err
-                            });
+                            return done(null, {type:false,msg: 'error occured '+ err,data:{}});
                         }
                         var cert = fs.readFileSync('key.pem');
                         var token = jwt.sign({email: user.local.email, role : user.role, name : user.local.name}, cert, { algorithm: 'HS512'});             
                       
-                        
                         user.token = token;
                         user.save(function(err,user1){
-                        if(err){
-                        return done(null, {type:false,msg: 'error occured '+ err,data:{}});
-                        }
+                        if(err)
+                            return done(null, {type:false,msg: 'error occured '+ err,data:{}});
+                        else
                             return done(null,{ type: true, msg:'',data:{ token: user1.token}});
                         }); 
                     });   
@@ -66,7 +62,7 @@ exports.loginStrategy = new LocalStrategy({
                      return done(null, {type:false, msg: "Account doesn't exists with the email provided.",data:{}});
                 } 
                 if(!user.validPassword(password)){
-                    eturn done(null, {type:false, msg: "Password is wrong.",data:{}});
+                    return done(null, {type:false, msg: "Password is wrong.",data:{}});
                 }
                 return done(null,{ type: true, msg:'',data:{ token: user.token}});
             });    
