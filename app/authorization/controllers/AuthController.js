@@ -6,7 +6,7 @@ exports.deleteUser = function(req,res,next){
     User.remove({"local.email" : req.body.email},function(err){
         if(err)
             res.json({type:false,msg: 'error occured '+ err,data:{}});
-        
+        else
             res.json({type:true,msg: 'user deleted successfully with email ',data:{}});
     });
 }
